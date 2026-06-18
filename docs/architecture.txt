@@ -1,0 +1,16 @@
+UPI Dataset
+     |
+     v
+Extract Layer (Python)
+     |
+     v
+Transform Layer (Pandas)
+     |
+     v
+SQL Server Database
+     |
+     v
+SQL Views
+     |
+     v
+Power BI Dashboards
