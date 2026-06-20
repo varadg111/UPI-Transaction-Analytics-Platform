@@ -14,8 +14,8 @@ def extract_data(file_path):
 
 
 
-df = extract_data(
-    r"C:\Users\varad\Downloads\Automated-Transaction-ETL-Pipeline\data\raw\upi_transactions_2024.csv"
-)
-
-print(df.head())
+if __name__ == "__main__":
+    df = extract_data(
+        r"data\raw\upi_transactions_2024.csv"
+    )
+    print(df.head())
