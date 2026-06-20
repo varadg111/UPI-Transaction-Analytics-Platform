@@ -1,387 +1,214 @@
 # UPI Transaction Analytics Platform
 
-## Project Highlights
+End-to-end analytics platform for monitoring UPI digital payment transactions — built with Python, SQL Server, and Power BI to track transaction performance, detect fraud patterns, and surface bank and merchant insights.
 
-✔ Processed 250,000+ UPI Transactions
-
-✔ Built Automated Python ETL Pipeline
-
-✔ Loaded Data into SQL Server
-
-✔ Created Analytical SQL Views
-
-✔ Developed 4 Interactive Power BI Dashboards
-
-✔ Generated Fraud, Merchant & Bank Performance Insights
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Python](https://img.shields.io/badge/python-3.x-blue.svg)
+![SQL Server](https://img.shields.io/badge/database-SQL%20Server-red.svg)
+![Power BI](https://img.shields.io/badge/visualization-Power%20BI-yellow.svg)
 
 ---
 
-# Project Overview
+## Problem
 
-The UPI Transaction Analytics Platform is an end-to-end data analytics solution designed to analyze digital payment transactions and generate actionable business insights.
-
-The project processes over **250,000 UPI transactions** using **Python, SQL Server, and Power BI** to monitor transaction performance, fraud activity, merchant behavior, and bank-level trends.
-
-This platform demonstrates the complete analytics lifecycle from data extraction and transformation to business reporting and decision support.
+Digital payment providers process millions of UPI transactions daily. Manually tracking success rates, fraud incidents, merchant performance, and bank-level trends across this volume is impractical. This project builds an automated pipeline that ingests raw transaction data, structures it for analysis, and surfaces the metrics that matter — without manual spreadsheet work.
 
 ---
 
-# Business Problem
+## Architecture
 
-Digital payment providers process millions of transactions daily.
+```
+UPI Transactions Dataset (CSV)
+            │
+            ▼
+   Extract Layer (extract.py)
+            │
+            ▼
+  Transform Layer (transform.py)
+   - Feature engineering
+   - Data quality checks
+            │
+            ▼
+   Load Layer (load.py / load_to_sql.py)
+            │
+            ▼
+      SQL Server Database
+      (Fact_Transactions)
+            │
+            ▼
+        SQL Views
+   (aggregated for reporting)
+            │
+            ▼
+     Power BI Dashboards
+```
 
-Monitoring transaction success rates, fraud incidents, merchant performance, and customer activity manually is inefficient and time-consuming.
-
-Organizations require a centralized analytics platform to:
-
-- Track transaction performance
-- Detect fraud patterns
-- Monitor bank performance
-- Understand customer behavior
-- Support business decision-making
-
-This project addresses these challenges through an automated ETL and analytics pipeline.
-
----
-
-# Business Questions Solved
-
-### 1. Which banks process the highest transaction volume?
-
-The analysis identifies leading banks by transaction count and transaction value, helping understand market share and customer adoption.
-
-### 2. Which merchant categories generate the highest transaction value?
-
-Merchant category analysis highlights the sectors driving the majority of payment activity.
-
-### 3. Which states exhibit the highest fraud activity?
-
-Fraud trends are analyzed geographically to support risk management and fraud monitoring.
-
-### 4. How does transaction volume vary across months?
-
-Monthly trend analysis helps identify seasonality and changes in customer spending behavior.
-
-### 5. What is the overall transaction success rate?
-
-Success rate analysis measures payment reliability and operational efficiency.
-
-### 6. Which device types are most associated with fraud?
-
-Fraud incidents are analyzed across Android, iOS, and Web channels to identify risk patterns.
-
-### 7. Which customer segments generate the most transactions?
-
-Customer segmentation based on demographics helps identify the most active user groups.
+*(Diagram image: `docs/architecture.png`)*
 
 ---
 
-# Dataset Description
+## Dashboard Screenshots
 
-| Attribute | Details |
-|------------|------------|
-| Dataset | UPI Transactions 2024 |
-| Source | Kaggle |
-| Records | 250,000+ |
-| Columns | 24 |
-| Domain | FinTech / Digital Payments |
-| Time Period | 2024 |
-| Format | CSV |
-
-### Key Attributes
-
-- Transaction ID
-- Transaction Timestamp
-- Transaction Type
-- Merchant Category
-- Transaction Amount
-- Transaction Status
-- Sender State
-- Sender Bank
-- Receiver Bank
-- Device Type
-- Network Type
-- Fraud Flag
-
----
-
-# Project Architecture
-
-![Architecture](docs/dashboard_screenshots/architecture.png)
-
----
-
-# Dashboard Screenshots
-
-## Executive Overview Dashboard
-
-Provides a high-level view of transaction activity, payment success rates, fraud monitoring, and merchant performance.
+### Executive Overview
+High-level view of transaction volume, transaction value, success rate, and fraud count.
 
 ![Executive Overview](docs/dashboard_screenshots/executive_overview.png)
 
----
-
-## Fraud Analytics Dashboard
-
-Identifies fraud patterns across states, device types, and network channels to support risk monitoring.
+### Fraud Analytics
+Fraud incidents broken down by state, device type, and network type.
 
 ![Fraud Analytics](docs/dashboard_screenshots/fraud_analytics.png)
 
----
-
-## Bank Performance Dashboard
-
-Compares transaction volume, transaction value, and market share across major banks.
+### Bank Performance
+Transaction volume, transaction value, and market share by bank.
 
 ![Bank Performance](docs/dashboard_screenshots/bank_performance.png)
 
----
-
-## Executive Dashboard
-
-Interactive dashboard for exploring transaction trends, merchant behavior, customer activity, and geographic insights.
+### Executive Dashboard
+Interactive filters across month, state, transaction type, and merchant category.
 
 ![Executive Dashboard](docs/dashboard_screenshots/executive_dashboard.png)
 
 ---
 
-# Technology Stack
+## Tech Stack
 
-### Programming
-
-- Python
-
-### Data Processing
-
-- Pandas
-- NumPy
-
-### Database
-
-- SQL Server
-- SQLAlchemy
-- PyODBC
-
-### Data Visualization
-
-- Power BI
-
-### Version Control
-
-- Git
-- GitHub
+| Layer | Tools |
+|---|---|
+| Language | Python |
+| Data Processing | Pandas, NumPy |
+| Database | SQL Server, SQLAlchemy, PyODBC |
+| Visualization | Power BI |
+| Version Control | Git, GitHub |
 
 ---
 
-# ETL Pipeline
+## Dataset
 
-## Extract
+| Attribute | Details |
+|---|---|
+| Source | Kaggle — UPI Transactions 2024 |
+| Records | 250,000+ |
+| Columns | 24 |
+| Domain | FinTech / Digital Payments |
+| Format | CSV |
 
-- Read raw transaction dataset
-- Validate schema
-- Load CSV into DataFrame
-
-## Transform
-
-Created business-ready columns:
-
-- transaction_date
-- transaction_month
-- transaction_quarter
-- amount_bucket
-- fraud_status
-- transaction_outcome
-- week_type
-
-Performed:
-
-- Date conversion
-- Feature engineering
-- Category standardization
-- Business rule implementation
-
-## Load
-
-- Saved processed dataset
-- Loaded data into SQL Server
-- Enabled SQL analytics and reporting
+Key fields: transaction ID, timestamp, transaction type, merchant category, amount, status, sender/receiver bank, sender state, device type, network type, fraud flag.
 
 ---
 
-# Data Cleaning & Transformation
+## How to Run
 
-To improve data quality and reporting accuracy:
+```bash
+# 1. Clone the repo
+git clone https://github.com/varadg111/UPI-Transaction-Analytics-Platform.git
+cd UPI-Transaction-Analytics-Platform
 
-### Data Quality Checks
+# 2. Install dependencies
+pip install -r requirements.txt
 
-- Validated transaction amounts
-- Standardized categorical values
-- Converted timestamps to datetime format
-- Created reporting dimensions
+# 3. Configure your database connection
+# Copy .env.example to .env and fill in your SQL Server credentials
+cp .env.example .env
 
-### Feature Engineering
+# 4. Run the ETL pipeline
+python src/main.py
 
-Generated additional analytical fields:
+# 5. Create SQL views (run once against your database)
+# Execute sql/create_tables.sql and sql/create_views.sql in SQL Server Management Studio
 
-- Transaction Month
-- Transaction Quarter
-- Amount Buckets
-- Fraud Status
-- Week Type
-- Transaction Outcome
-
-These features improved dashboard reporting and business analysis.
-
----
-
-# SQL Analytics
-
-The processed dataset was loaded into SQL Server and analytical views were created.
-
-### SQL Views Created
-
-#### Daily Transaction Summary
-
-Tracks:
-
-- Daily transaction volume
-- Daily transaction value
-- Success rate
-
-#### Fraud Analysis
-
-Tracks:
-
-- Fraud count by state
-- Fraud count by device type
-- Fraud count by network type
-
-#### Bank Performance Analysis
-
-Tracks:
-
-- Bank transaction volume
-- Bank transaction value
-- Bank market share
-
-### SQL Operations Used
-
-- Aggregations
-- GROUP BY
-- CASE Statements
-- SQL Views
-- Filtering
-- Sorting
-- Ranking Analysis
+# 6. Open the dashboard
+# Open dashboard/UPI_Analytics.pbix in Power BI Desktop and refresh the data source
+```
 
 ---
 
-# Power BI Dashboards
+## ETL Pipeline
 
-### Executive Overview
+**Extract** (`src/extract.py`)
+Reads the raw transaction CSV and validates basic schema before passing it downstream.
 
-- Total Transactions
-- Transaction Value
-- Success Rate
-- Fraud Count
-- Monthly Trends
+**Transform** (`src/transform.py`)
+Engineers business-ready features:
+- `transaction_date`, `transaction_month`, `transaction_quarter`
+- `amount_bucket` — categorized transaction size
+- `fraud_status`, `transaction_outcome`
+- `week_type` — weekday vs weekend
 
-### Fraud Analytics
-
-- Fraud by State
-- Fraud by Device
-- Fraud by Network
-
-### Bank Performance
-
-- Bank Market Share
-- Transaction Volume
-- Transaction Value
-
-### Executive Dashboard
-
-- Interactive Filters
-- Merchant Analysis
-- State Analysis
-- Monthly Trends
-- KPI Tracking
+**Load** (`src/load.py`, `src/load_to_sql.py`)
+Loads the transformed dataset into SQL Server in chunked batches, ready for SQL-based reporting.
 
 ---
 
-# Key Performance Indicators (KPIs)
+## SQL Layer
 
-| KPI | Business Importance |
-|-------|--------------------|
-| Total Transactions | Measures platform activity |
-| Transaction Value | Indicates payment volume and revenue potential |
-| Success Rate | Measures transaction reliability |
-| Fraud Count | Supports risk monitoring |
-| Bank Market Share | Competitive benchmarking |
-| Merchant Contribution | Revenue source analysis |
+The processed data is loaded into a single `Fact_Transactions` table in SQL Server, with the following analytical views built on top:
 
----
+| View | Purpose |
+|---|---|
+| `vw_daily_transaction_summary` | Daily transaction volume, value, and success/failure counts |
+| `vw_bank_performance` | Transaction count and value by bank |
+| `vw_fraud_analysis` | Fraud count and rate by state |
+| `vw_fraud_by_device` | Fraud count and rate by device type |
+| `vw_fraud_by_network` | Fraud count and rate by network type |
+| `vw_transaction_success_summary` | Daily success rate calculation |
+| `vw_monthly_performance` | Monthly transaction count, value, and average ticket size |
 
-# Key Business Insights
-
-### Transaction Insights
-
-- Processed over 250,000 transactions.
-- Achieved a transaction success rate above 95%.
-- Transaction activity remained stable throughout the year.
-
-### Merchant Insights
-
-- Shopping and Grocery categories generated the highest transaction value.
-- Utilities and Fuel categories contributed significantly to transaction volume.
-
-### Fraud Insights
-
-- Fraud activity represented a very small percentage of overall transactions.
-- Android devices recorded the highest fraud count.
-- Fraud patterns varied across states, highlighting regional risk differences.
-
-### Banking Insights
-
-- SBI processed the highest transaction volume.
-- HDFC and ICICI followed as major contributors.
-- Bank-level performance analysis highlighted customer adoption trends.
+> **Design note:** this project uses a single denormalized fact table rather than a fully normalized star schema. This was a deliberate simplicity trade-off for a dataset of this size — the views above provide the same reporting flexibility without the join overhead of separate dimension tables.
 
 ---
 
-# Project Outcomes
+## Power BI Dashboards
 
-- Built a complete ETL pipeline using Python.
-- Processed 250,000+ UPI transactions.
-- Loaded transformed data into SQL Server.
-- Created SQL views for business reporting.
-- Developed 4 interactive Power BI dashboards.
-- Generated fraud monitoring and banking insights.
-- Demonstrated an end-to-end analytics workflow used in BFSI organizations.
+- **Executive Overview** — Total transactions, transaction value, success rate, fraud count, monthly trend
+- **Fraud Analytics** — Fraud by state, device type, network type
+- **Bank Performance** — Bank market share, transaction volume and value by bank
+- **Executive Dashboard** — Interactive filters, merchant category breakdown, state-level analysis
 
 ---
 
-# Future Improvements
+## Key Insights
 
-- Real-time transaction ingestion
-- Fraud prediction using Machine Learning
-- Customer Segmentation Models
-- Automated Dashboard Refresh
-- Azure Cloud Deployment
-- Streamlit Web Application
+- Overall transaction success rate is above 95%, indicating strong platform reliability.
+- Fraud transactions represent a small fraction of total volume, but are concentrated more heavily on Android devices and certain network types — suggesting fraud monitoring should be weighted by channel, not applied uniformly.
+- Shopping and Grocery merchant categories drive the highest transaction value, while Utilities and Fuel contribute more to transaction *volume* than value — a useful distinction for merchant partnership prioritization.
+- A small number of banks account for a disproportionate share of transaction volume, which has implications for partnership negotiation leverage and infrastructure load planning.
 
 ---
 
-# Author
+## Limitations & Future Work
 
-## Varad Gandhi
+This project currently focuses on descriptive analytics (what happened) rather than predictive analytics (what's likely to happen next). Planned next steps:
 
-Final Year Dual Degree Student
+- **Fraud prediction model** — train a classifier (logistic regression / XGBoost) on the engineered features, evaluated on precision/recall rather than accuracy given class imbalance, with risk scores surfaced back into the dashboard.
+- **Automated testing** — unit tests on transform logic, run via GitHub Actions on each push.
+- **Data validation layer** — explicit null/duplicate/schema checks with logging, rather than relying on clean input data.
+- **Cloud deployment** — migrate the pipeline to Azure Data Factory / Microsoft Fabric for scheduled, production-style ingestion.
 
-- B.E. Electronics & Computer Science
-- B.Sc. Data Science (IIT Madras)
+---
+
+## Author
+
+**Varad Gandhi**
+Final-Year Dual Degree Student
+
+* B.E. Electronics & Computer Science
+* B.Sc. Data Science (IIT Madras)
+
+### Connect
+
+* LinkedIn: https://www.linkedin.com/in/varad-gandhi-15a9b9291/
+* Email: [gandhivarad1@gmail.com](mailto:gandhivarad1@gmail.com)
 
 ### Skills
 
 Python • SQL • Power BI • Excel • SQL Server • Azure • Microsoft Fabric • ETL Pipelines • Data Analytics
 
 ---
+
+## License
+
+This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
+
+
+This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
