@@ -1,3 +1,9 @@
+import logging
+logging.basicConfig(
+    filename="logs/pipeline.log",
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
 import pandas as pd
 from extract import extract_data
 
@@ -7,21 +13,21 @@ def transform_data(df):
     Performs all data transformations and feature engineering.
     """
 
-    print("\nStarting Transformation...")
+    logging.info("\nStarting Transformation...")
 
     # Create copy
     df = df.copy()
 
     # 1. Convert timestamp
-    print("Converting timestamp...")
+    logging.info("Converting timestamp...")
     df["timestamp"] = pd.to_datetime(df["timestamp"])
 
     # 2. Create transaction date
-    print("Creating transaction date...")
+    logging.info("Creating transaction date...")
     df["transaction_date"] = df["timestamp"].dt.date
 
     # 3. Create transaction month
-    print("Creating transaction month...")
+    logging.info("Creating transaction month...")
     df["transaction_month"] = (
         df["timestamp"]
         .dt.to_period("M")
@@ -29,13 +35,13 @@ def transform_data(df):
     )
 
     # 4. Create transaction quarter
-    print("Creating transaction quarter...")
+    logging.info("Creating transaction quarter...")
     df["transaction_quarter"] = (
         "Q" + df["timestamp"].dt.quarter.astype(str)
     )
 
     # 5. Create amount bucket
-    print("Creating amount buckets...")
+    logging.info("Creating amount buckets...")
 
     bins = [0, 500, 1000, 5000, 10000, float("inf")]
 
@@ -54,7 +60,7 @@ def transform_data(df):
     )
 
     # 6. Create fraud status
-    print("Creating fraud status...")
+    logging.info("Creating fraud status...")
 
     df["fraud_status"] = df["fraud_flag"].map({
         0: "Genuine",
@@ -62,7 +68,7 @@ def transform_data(df):
     })
 
     # 7. Create transaction outcome
-    print("Creating transaction outcome...")
+    logging.info("Creating transaction outcome...")
 
     df["transaction_outcome"] = df["transaction_status"].map({
         "SUCCESS": "Successful",
@@ -70,16 +76,16 @@ def transform_data(df):
     })
 
     # 8. Create week type
-    print("Creating week type...")
+    logging.info("Creating week type...")
 
     df["week_type"] = df["is_weekend"].map({
         0: "Weekday",
         1: "Weekend"
     })
 
-    print("\nTransformation Completed")
-    print(f"Rows: {df.shape[0]}")
-    print(f"Columns: {df.shape[1]}")
+    logging.info("\nTransformation Completed")
+    logging.info(f"Rows: {df.shape[0]}")
+    logging.info(f"Columns: {df.shape[1]}")
 
     return df
 
@@ -92,11 +98,11 @@ if __name__ == "__main__":
 
     df = transform_data(df)
 
-    print("\nFirst 5 Rows:")
-    print(df.head())
+    logging.info("\nFirst 5 Rows:")
+    logging.info(df.head())
 
-    print("\nDataset Shape:")
-    print(df.shape)
+    logging.info("\nDataset Shape:")
+    logging.info(df.shape)
 
-    print("\nColumns:")
-    print(df.columns.tolist())
+    logging.info("\nColumns:")
+    logging.info(df.columns.tolist())

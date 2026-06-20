@@ -1,3 +1,9 @@
+import logging
+logging.basicConfig(
+    filename="logs/pipeline.log",
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
 from extract import extract_data
 from transform import transform_data
 
@@ -7,16 +13,16 @@ def load_data(df, output_path):
     Save transformed dataframe to CSV
     """
 
-    print("\nStarting Load Process...")
+    logging.info("Starting Load Process...")
 
     df.to_csv(output_path, index=False)
 
-    print("File Saved Successfully")
-    print(f"Rows Saved: {df.shape[0]}")
-    print(f"Columns Saved: {df.shape[1]}")
-    print(f"Output File: {output_path}")
+    logging.info("File Saved Successfully")
+    logging.info(f"Rows Saved: {df.shape[0]}")
+    logging.info(f"Columns Saved: {df.shape[1]}")
+    logging.info(f"Output File: {output_path}")
 
-    print("Load Completed")
+    logging.info("Load Completed")
 
 
 if __name__ == "__main__":
