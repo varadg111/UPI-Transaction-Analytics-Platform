@@ -17,6 +17,8 @@ Digital payment providers process millions of UPI transactions daily. Manually t
 
 ## Architecture
 
+![Architecture](docs/architecture.png)
+
 ```
 UPI Transactions Dataset (CSV)
             │
@@ -42,8 +44,6 @@ UPI Transactions Dataset (CSV)
             ▼
      Power BI Dashboards
 ```
-
-*(Diagram image: `docs/architecture.png`)*
 
 ---
 
@@ -108,17 +108,19 @@ cd UPI-Transaction-Analytics-Platform
 pip install -r requirements.txt
 
 # 3. Configure your database connection
-# Copy .env.example to .env and fill in your SQL Server credentials
-cp .env.example .env
+# Update the connection string in src/load_to_sql.py with your own
+# SQL Server instance details
 
 # 4. Run the ETL pipeline
 python src/main.py
 
 # 5. Create SQL views (run once against your database)
-# Execute sql/create_tables.sql and sql/create_views.sql in SQL Server Management Studio
+# Execute sql/create_tables.sql and sql/create_views.sql in
+# SQL Server Management Studio
 
 # 6. Open the dashboard
-# Open dashboard/UPI_Analytics.pbix in Power BI Desktop and refresh the data source
+# Open dashboard/UPI_Analytics.pbix in Power BI Desktop and
+# refresh the data source
 ```
 
 ---
@@ -192,13 +194,13 @@ This project currently focuses on descriptive analytics (what happened) rather t
 **Varad Gandhi**
 Final-Year Dual Degree Student
 
-* B.E. Electronics & Computer Science
-* B.Sc. Data Science (IIT Madras)
+- B.E. Electronics & Computer Science
+- B.Sc. Data Science (IIT Madras)
 
 ### Connect
 
-* LinkedIn: https://www.linkedin.com/in/varad-gandhi-15a9b9291/
-* Email: [gandhivarad1@gmail.com](mailto:gandhivarad1@gmail.com)
+- LinkedIn: https://www.linkedin.com/in/varad-gandhi-15a9b9291/
+- Email: gandhivarad1@gmail.com
 
 ### Skills
 
@@ -208,7 +210,8 @@ Python • SQL • Power BI • Excel • SQL Server • Azure • Microsoft Fab
 
 ## License
 
-This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
+This project is licensed under the MIT License — see LICENSE file for details.
 
+---
 
-This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
+Quick reminder before you push: make sure `docs/architecture.png` matches your actual saved filename exactly (case-sensitive), and that `requirements.txt` and a real `LICENSE` file exist in your repo root — otherwise those links/instructions will break. Want me to generate those two files now?
