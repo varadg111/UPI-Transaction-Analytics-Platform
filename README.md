@@ -212,6 +212,3 @@ Python • SQL • Power BI • Excel • SQL Server • Azure • Microsoft Fab
 
 This project is licensed under the MIT License — see LICENSE file for details.
 
----
-
-Quick reminder before you push: make sure `docs/architecture.png` matches your actual saved filename exactly (case-sensitive), and that `requirements.txt` and a real `LICENSE` file exist in your repo root — otherwise those links/instructions will break. Want me to generate those two files now?
